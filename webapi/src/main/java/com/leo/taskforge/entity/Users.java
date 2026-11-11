@@ -1,11 +1,12 @@
 package com.leo.taskforge.entity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
+@Entity
+@Table(name = "users")
 public class Users {
 
     @Id
@@ -16,19 +17,22 @@ public class Users {
 
     private String last_name;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
     private String password;
 
-    private Date created_at;
+    private LocalDateTime created_at;
 
-    private Date updated_at;
+    private LocalDateTime updated_at;
 
-    public Date getCreated_at() {
+    public Users(){}
+
+    public LocalDateTime getCreated_at() {
         return created_at;
     }
 
-    public Date getUpdated_at() {
+    public LocalDateTime getUpdated_at() {
         return updated_at;
     }
 
@@ -56,8 +60,9 @@ public class Users {
         this.email = email;
     }
 
-    public void setCreated_at(Date created_at) {
-        this.created_at = created_at;
+    @PrePersist
+    public void onCreate() {
+        this.created_at = LocalDateTime.now();
     }
 
     public void setFirst_name(String first_name) {
@@ -76,8 +81,9 @@ public class Users {
         this.password = password;
     }
 
-    public void setUpdated_at(Date updated_at) {
+    public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
     }
+
 
 }
